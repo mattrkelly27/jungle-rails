@@ -1,12 +1,12 @@
 class Admin::CategoriesController < ApplicationController
+  before_filter :authorize
+
     def index
         @categories = Category.order(id: :desc).all
       end
-    
       def new
         @category = Category.new
       end
-    
       def create
         @category = Category.new(category_params)  
     
@@ -16,7 +16,6 @@ class Admin::CategoriesController < ApplicationController
           render :new
         end
       end
-
       private
 
 
@@ -27,4 +26,5 @@ class Admin::CategoriesController < ApplicationController
       end
 
     
+      end    
 end
