@@ -10,8 +10,15 @@ class OrdersController < ApplicationController
     order  = create_order(charge)
 
     if order.valid?
+      UserMailer.welcome_email(order).deliver_later
+
+      # format.html { redirect_to(@user, notice: 'User was successfully created.') }
+      # format.json { render json: @user, status: :created, location: @user }
+
       empty_cart!
+
       redirect_to order, notice: 'Your Order has been placed.'
+
     else
       redirect_to cart_path, flash: { error: order.errors.full_messages.first }
     end
@@ -37,7 +44,7 @@ class OrdersController < ApplicationController
   end
 
   def create_order(stripe_charge)
-    order = Order.new(
+    order = Order.new(   ##only accessing order, not useing @order
       email: params[:stripeEmail],
       total_cents: cart_subtotal_cents,
       stripe_charge_id: stripe_charge.id, # returned by stripe
@@ -53,6 +60,7 @@ class OrdersController < ApplicationController
         total_price: product.price * quantity
       )
 
+     
     end
     order.save!
     order
