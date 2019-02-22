@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
   end
 
   def create_order(stripe_charge)
-    order = Order.new(   ##only accessing order, not useing @order
+    order = Order.new(   ##only accessing order, not using @order
       email: params[:stripeEmail],
       total_cents: cart_subtotal_cents,
       stripe_charge_id: stripe_charge.id, # returned by stripe
