@@ -41,7 +41,7 @@ end
 
     it 'should have a category' do
       @product = Product.new
-      @product.category_id = 3
+      @product.category_id = 1
       expect(@product.category_id).to be_present
     end
   end
